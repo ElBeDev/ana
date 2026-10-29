@@ -924,15 +924,21 @@ html.reduced .hero__b {
   height: 100%;
   object-fit: cover;
   z-index: -3;
-  transition: transform 1.2s var(--ease-main);
+  filter: brightness(0.72) saturate(0.95);
+  transition:
+    transform 1.2s var(--ease-main),
+    filter 0.5s ease;
 }
 .svc:is(:hover, :focus-within, .is-active) .svc__img {
   transform: scale(1.05);
+  filter: brightness(0.55) saturate(0.9);
 }
+/* Velo oscuro + sombra central para que el título siempre contraste */
 .svc__dim {
   position: absolute;
   inset: 0;
-  background: rgba(5, 12, 22, 0.25);
+  background-color: rgba(5, 12, 22, 0.3);
+  background-image: radial-gradient(ellipse 95% 38% at 50% 50%, rgba(5, 12, 22, 0.7) 0%, rgba(5, 12, 22, 0) 75%);
   z-index: -2;
   transition: background-color 0.4s ease;
 }
@@ -954,7 +960,7 @@ html.reduced .hero__b {
   opacity: 0.72;
 }
 .svc:is(:hover, :focus-within, .is-active) .svc__dim {
-  background: rgba(5, 12, 22, 0.62);
+  background-color: rgba(5, 12, 22, 0.78);
 }
 .svc__num {
   position: absolute;
@@ -974,6 +980,9 @@ html.reduced .hero__b {
   letter-spacing: -0.04em;
   text-transform: uppercase;
   line-height: 0.95;
+  text-shadow:
+    0 2px 18px rgba(5, 12, 22, 0.85),
+    0 0 2px rgba(5, 12, 22, 0.6);
   z-index: 2;
   transition: opacity 0.3s ease;
 }
@@ -1022,7 +1031,7 @@ html.reduced .hero__b {
 .svc__note {
   margin-top: 0.5rem;
   font-size: 0.7rem;
-  opacity: 0.7;
+  color: rgba(255, 255, 255, 0.75);
 }
 .svc:is(:hover, :focus-within, .is-active) .svc__details > * {
   opacity: 1;
@@ -1058,10 +1067,10 @@ html.reduced .hero__b {
     margin: -3.75rem 0 0 -5.5rem;
   }
   .mockup:nth-child(1) {
-    top: -8rem;
+    top: -10rem;
   }
-  .mockup:nth-child(3) {
-    top: 8rem;
+  .mockup:nth-child(2) {
+    top: 10rem;
   }
 }
 
@@ -1145,10 +1154,10 @@ html.reduced .hero__b {
   border-radius: 0.35rem;
 }
 .mockup:nth-child(1) {
-  top: -11rem;
+  top: -13rem;
 }
-.mockup:nth-child(3) {
-  top: 11rem;
+.mockup:nth-child(2) {
+  top: 13rem;
 }
 .mockup:nth-child(1) i {
   background: var(--navy);
@@ -1156,9 +1165,7 @@ html.reduced .hero__b {
 .mockup:nth-child(2) i {
   background: var(--wine);
 }
-.mockup:nth-child(3) i {
-  background: var(--blue);
-}
+
 .svc:is(:hover, :focus-within, .is-active) .mockup {
   transition: transform 1s cubic-bezier(0.215, 0.61, 0.355, 1);
 }
@@ -1166,9 +1173,6 @@ html.reduced .hero__b {
   transform: translateX(-9em);
 }
 .svc:is(:hover, :focus-within, .is-active) .mockup:nth-child(2) {
-  transform: translateX(9em);
-}
-.svc:is(:hover, :focus-within, .is-active) .mockup:nth-child(3) {
   transform: translateX(9em);
 }
 
@@ -1194,12 +1198,15 @@ html.reduced .hero__b {
 .courses {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: space-between;
   gap: 0.75rem;
-  padding: 0 12%;
+  padding: 14% 8%;
   transform: rotate(-8deg);
+}
+.course:nth-child(3) {
+  grid-column: 2;
 }
 .course {
   background: #fff;

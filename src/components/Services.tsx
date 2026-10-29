@@ -21,11 +21,11 @@ function Art({ id }: { id: string }) {
               <i style={{ width: "55%", marginLeft: "15%", background: "var(--navy)" }} />
             </div>
           </div>
-          <div className="art-card" style={{ right: "8%", top: "60%", width: "46%", ["--r" as string]: "5deg" }}>
+          <div className="art-card" style={{ right: "8%", top: "70%", width: "46%", ["--r" as string]: "5deg" }}>
             Avance vs. plan
             <b>87%</b>
           </div>
-          <div className="art-card" style={{ left: "8%", bottom: "8%", width: "50%", ["--r" as string]: "-3deg" }}>
+          <div className="art-card" style={{ left: "8%", bottom: "5%", width: "50%", ["--r" as string]: "-3deg" }}>
             ✓ Hito: tablero de control
           </div>
         </div>
@@ -34,7 +34,6 @@ function Art({ id }: { id: string }) {
       return (
         <div className="svc__art">
           <div className="mockups">
-            <div className="mockup"><i /></div>
             <div className="mockup"><i /></div>
             <div className="mockup"><i /></div>
           </div>
