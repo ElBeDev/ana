@@ -12,7 +12,10 @@ export const site = {
     "Strategic Planning",
     "Cross-functional Leadership",
   ],
-  url: "https://ana-aguirre.vercel.app", // TODO: dominio definitivo
+  // En Vercel toma el dominio de producción del proyecto; cámbialo cuando haya dominio propio.
+  url: process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000",
   timezone: "America/Mexico_City",
 
   // TODO: datos reales de contacto. Mientras estén vacíos, los CTAs llevan a #contacto
