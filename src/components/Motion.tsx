@@ -161,7 +161,7 @@ export function Motion() {
       gsap.utils.toArray<HTMLElement>('[data-reveal="chars"]').forEach((el) => {
         gsap.set(el, { visibility: "visible" });
         gsap.from(el.querySelectorAll(".ch"), {
-          yPercent: 110,
+          yPercent: 140,
           duration: 1,
           stagger: 0.03,
           ease: EASE_MAIN,

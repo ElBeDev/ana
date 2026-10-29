@@ -1652,7 +1652,8 @@ html.reduced .noise__mask {
   line-height: 0.8;
   font-size: 18.4vw;
   overflow: hidden;
-  padding-bottom: 0.04em;
+  /* Aire para la "e" final (se sale de su caja por el tracking negativo) y la colita de la "g" */
+  padding: 0 0.07em 0.24em 0;
 }
 .bigname b {
   font-weight: 800;
