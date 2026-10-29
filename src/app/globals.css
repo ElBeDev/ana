@@ -1342,10 +1342,17 @@ html.reduced .hero__b {
 }
 .noise__img {
   position: absolute;
-  width: clamp(7rem, 13vw, 13rem);
-  aspect-ratio: 1;
-  object-fit: cover;
-  image-rendering: pixelated;
+  width: var(--w);
+  height: auto;
+}
+.noise__img[data-depth="far"] {
+  filter: blur(0.8px);
+  opacity: 0.75;
+}
+@media (max-width: 767px) {
+  .noise__img {
+    width: calc(var(--w) * 2.1);
+  }
 }
 .noise__text {
   position: absolute;

@@ -58,13 +58,14 @@ export function Process() {
   );
 }
 
+// depth "far": más chica, desenfocada y lenta; "near": más grande, nítida y rápida
 const NOISE = [
-  { src: "notes", left: "6%", top: "14%", speed: 70 },
-  { src: "inbox", left: "74%", top: "8%", speed: 35 },
-  { src: "sheet", left: "60%", top: "62%", speed: 55 },
-  { src: "cal", left: "16%", top: "66%", speed: 25 },
-  { src: "chat", left: "36%", top: "4%", speed: 90 },
-  { src: "todo", left: "84%", top: "48%", speed: 60 },
+  { src: "notes", left: "4%", top: "8%", w: 19, depth: "near", speed: 80 },
+  { src: "inbox", left: "70%", top: "5%", w: 22, depth: "near", speed: 60 },
+  { src: "chat", left: "36%", top: "3%", w: 15, depth: "far", speed: 35 },
+  { src: "cal", left: "13%", top: "62%", w: 14, depth: "far", speed: 25 },
+  { src: "sheet", left: "58%", top: "66%", w: 16, depth: "far", speed: 30 },
+  { src: "todo", left: "79%", top: "62%", w: 18, depth: "near", speed: 90 },
 ];
 
 export function Noise() {
@@ -80,7 +81,8 @@ export function Noise() {
             alt=""
             loading="lazy"
             data-speed={n.speed}
-            style={{ left: n.left, top: n.top }}
+            data-depth={n.depth}
+            style={{ left: n.left, top: n.top, ["--w" as string]: `${n.w}vw` }}
           />
         ))}
         <div className="noise__text">
