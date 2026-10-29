@@ -221,7 +221,7 @@ export const services: Service[] = [
   },
 ];
 
-export const process = [
+export const steps = [
   { title: "Diagnóstico", text: "Entender la necesidad, el contexto y los objetivos." },
   { title: "Planeación", text: "Definir alcance, procesos, cronograma, hitos e indicadores." },
   { title: "Ejecución", text: "Implementar con el equipo y los especialistas adecuados, resolviendo bloqueos." },

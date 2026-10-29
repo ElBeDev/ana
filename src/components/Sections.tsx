@@ -1,7 +1,7 @@
 import {
   site,
   stats,
-  process,
+  steps,
   skills,
   experience,
   organizations,
@@ -46,7 +46,7 @@ export function Process() {
       <div className="process">
         <div className="process__track" />
         <div className="process__line" />
-        {process.map((p, i) => (
+        {steps.map((p, i) => (
           <div key={p.title} className="step">
             <div className="step__num">0{i + 1}</div>
             <h3>{p.title}</h3>
