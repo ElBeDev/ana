@@ -1,13 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { site, contactHref } from "@/content/site";
+import type { HeroProps } from "@/blocks/types";
+import { useContactHref, useSettings } from "@/blocks/context";
 import { gsap, isFinePointer, prefersReducedMotion } from "@/lib/motion";
 import { HeroLens } from "@/components/HeroLens";
 import { Pill } from "@/components/ui/Pill";
 
-export function Hero() {
+export function Hero(props: HeroProps) {
   const ref = useRef<HTMLElement>(null);
+  const { identity } = useSettings();
+  const contactHref = useContactHref();
 
   // Parallax del contenido con el mouse (±0.5em)
   useEffect(() => {
@@ -29,33 +32,33 @@ export function Hero() {
     <section className="hero" id="inicio" ref={ref} data-nav="light" data-section>
       <div className="hero__media" data-hero="media">
         <picture>
-          <source media="(max-width: 767px)" srcSet="/img/hero-a-m.webp" />
-          <img src="/img/hero-a.webp" alt="Ana Aguirre, consultora estratégica" fetchPriority="high" />
+          <source media="(max-width: 767px)" srcSet={props.imageAMobile} />
+          <img src={props.imageA} alt={props.alt} fetchPriority="high" />
         </picture>
         <div className="hero__b" aria-hidden="true">
           <picture>
-            <source media="(max-width: 767px)" srcSet="/img/hero-b-m.webp" />
-              <img src="/img/hero-b.webp" alt="" loading="lazy" />
+            <source media="(max-width: 767px)" srcSet={props.imageBMobile} />
+              <img src={props.imageB} alt="" loading="lazy" />
           </picture>
         </div>
-        <HeroLens a="/img/hero-a.webp" b="/img/hero-b.webp" />
+        <HeroLens a={props.imageA} b={props.imageB} />
       </div>
       <div className="hero__shade" />
 
       <div className="hero__content">
         <div className="hero__parallax">
           <h1 className="hero__title">
-            <span className="sr-only">{site.name}, </span>
+            <span className="sr-only">{identity.name}, </span>
             <span style={{ display: "block" }} data-hero="l1">
-              Estrategia
+              {props.titleSans}
             </span>
             <span className="serif" data-hero="l2">
-              que se transforma en soluciones
+              {props.titleSerif}
             </span>
           </h1>
           <div className="hero__cta" data-hero="cta">
             <Pill href={contactHref()} variant="light" cursor="ESCRÍBEME">
-              Agendar una llamada
+              {props.cta}
             </Pill>
           </div>
         </div>
@@ -65,14 +68,11 @@ export function Hero() {
         <div className="hr" style={{ opacity: 0.45 }} data-hero="line" />
         <div className="hero__bar-row">
           <span className="tag" data-hero="tag">
-            {site.role}
+            {props.leftTag}
           </span>
-          <p data-hero="para">
-            Más de 15 años convirtiendo necesidades empresariales e institucionales en soluciones operativas y
-            digitales.
-          </p>
+          <p data-hero="para">{props.paragraph}</p>
           <span className="tag" data-hero="tag">
-            Consultoría &amp; Soluciones Digitales
+            {props.rightTag}
           </span>
         </div>
       </div>

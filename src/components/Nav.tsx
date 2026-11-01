@@ -1,20 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { site, contactHref } from "@/content/site";
+import { useContactHref, useSettings } from "@/blocks/context";
 import { lockScroll } from "@/lib/motion";
 import { Pill, Roll } from "@/components/ui/Pill";
 
-const LINKS = [
-  { href: "#inicio", label: "Inicio" },
-  { href: "#experiencia", label: "Experiencia" },
-  { href: "#servicios", label: "Servicios" },
-  { href: "#sobre-mi", label: "Sobre mí" },
-  { href: "#contacto", label: "Contacto" },
-];
-
 export function Nav() {
   const [open, setOpen] = useState(false);
+  const { identity, contact, nav } = useSettings();
+  const contactHref = useContactHref();
+  const LINKS = nav.links;
   const touched = useRef(false);
 
   useEffect(() => {
@@ -30,7 +25,7 @@ export function Nav() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const { whatsapp, email, linkedin } = site.contact;
+  const { whatsapp, email, linkedin } = contact;
 
   return (
     <>
@@ -40,13 +35,13 @@ export function Nav() {
           <span className="serif">Aguirre</span>
         </a>
         <nav className="nav__pills" aria-label="Principal">
-          {LINKS.map((l) => (
-            <a key={l.href} href={l.href} className="nav-pill">
+          {LINKS.map((l, i) => (
+            <a key={i} href={l.href} className="nav-pill">
               <span>{l.label}</span>
             </a>
           ))}
           <Pill href={contactHref()} className="nav__cta" cursor="ESCRÍBEME">
-            Agendar llamada
+            {nav.cta}
           </Pill>
         </nav>
         <button
@@ -66,8 +61,8 @@ export function Nav() {
       <div id="menu" className={`menu ${open ? "is-open" : ""}`} aria-hidden={!open}>
         <div className="menu__inner">
           <nav className="menu__links" aria-label="Menú móvil">
-            {LINKS.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} tabIndex={open ? 0 : -1}>
+            {LINKS.map((l, i) => (
+              <a key={i} href={l.href} onClick={() => setOpen(false)} tabIndex={open ? 0 : -1}>
                 <span>{l.label}</span>
               </a>
             ))}
@@ -98,7 +93,7 @@ export function Nav() {
                   <Roll>LinkedIn</Roll>
                 </a>
               ) : (
-                <span style={{ display: "block", marginTop: "0.5rem", opacity: 0.6 }}>{site.role}</span>
+                <span style={{ display: "block", marginTop: "0.5rem", opacity: 0.6 }}>{identity.role}</span>
               )}
             </div>
           </div>

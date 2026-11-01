@@ -88,6 +88,8 @@ void main() {
 function loadImage(src: string) {
   return new Promise<HTMLImageElement>((resolve, reject) => {
     const img = new Image();
+    // Las imágenes subidas viven en Vercel Blob (otro dominio); WebGL necesita CORS.
+    img.crossOrigin = "anonymous";
     img.decoding = "async";
     img.onload = () => resolve(img);
     img.onerror = reject;

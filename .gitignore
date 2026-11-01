@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -42,3 +43,6 @@ next-env.d.ts
 
 # referencias visuales de terceros (no se publican)
 /referencia/
+
+# imágenes subidas en desarrollo (en producción van a Vercel Blob)
+/public/uploads/

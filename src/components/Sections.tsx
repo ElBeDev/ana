@@ -1,30 +1,29 @@
-import {
-  site,
-  stats,
-  steps,
-  skills,
-  experience,
-  organizations,
-  education,
-  tools,
-  competencies,
-  contactHref,
-} from "@/content/site";
+"use client";
+
+import type {
+  AboutProps,
+  EducationProps,
+  IntroProps,
+  NoiseProps,
+  OrganizationsProps,
+  ProcessProps,
+} from "@/blocks/types";
+import { useBlock, useContactHref, useSettings } from "@/blocks/context";
+import { Inline, Lines, paragraphs } from "@/lib/inline";
 import { Pill } from "@/components/ui/Pill";
 
-export function Intro() {
+export function Intro(props: IntroProps) {
   return (
     <section className="section intro" id="sobre" aria-label="Presentación">
       <span className="small-tag" data-reveal="up">
-        (Sobre mí)
+        {props.label}
       </span>
       <p className="intro__text" data-scrub-words>
-        Soy Ana Aguirre. Conecto la estrategia de negocio con soluciones operativas y tecnológicas{" "}
-        <span className="serif">que sí se ejecutan.</span>
+        <Inline text={props.text} />
       </p>
       <div className="stats">
-        {stats.map((s) => (
-          <div key={s.label} className="stat" data-reveal="up">
+        {props.stats.map((s, i) => (
+          <div key={i} className="stat" data-reveal="up">
             <div className="stat__num" data-count={s.value} data-prefix={s.prefix}>
               {s.prefix}
               {s.value.toLocaleString("es-MX")}
@@ -37,17 +36,17 @@ export function Intro() {
   );
 }
 
-export function Process() {
+export function Process(props: ProcessProps) {
   return (
     <section className="section" id="proceso" aria-labelledby="proceso-title">
       <h2 className="display" id="proceso-title" data-reveal="lines">
-        Cómo <span className="serif">trabajo</span>
+        <Inline text={props.title} />
       </h2>
       <div className="process">
         <div className="process__track" />
         <div className="process__line" />
-        {steps.map((p, i) => (
-          <div key={p.title} className="step">
+        {props.steps.map((p, i) => (
+          <div key={i} className="step">
             <div className="step__num">0{i + 1}</div>
             <h3>{p.title}</h3>
             <p>{p.text}</p>
@@ -58,50 +57,51 @@ export function Process() {
   );
 }
 
+// Posición de cada imagen del ruido (las imágenes se editan en el panel; el acomodo es diseño).
 // depth "far": más chica, desenfocada y lenta; "near": más grande, nítida y rápida
 const NOISE = [
-  { src: "notes", left: "4%", top: "8%", w: 19, depth: "near", speed: 80 },
-  { src: "inbox", left: "70%", top: "5%", w: 22, depth: "near", speed: 60 },
-  { src: "chat", left: "36%", top: "3%", w: 15, depth: "far", speed: 35 },
-  { src: "cal", left: "13%", top: "62%", w: 14, depth: "far", speed: 25 },
-  { src: "sheet", left: "58%", top: "66%", w: 16, depth: "far", speed: 30 },
-  { src: "todo", left: "79%", top: "62%", w: 18, depth: "near", speed: 90 },
+  { left: "4%", top: "8%", w: 19, depth: "near", speed: 80 },
+  { left: "70%", top: "5%", w: 22, depth: "near", speed: 60 },
+  { left: "36%", top: "3%", w: 15, depth: "far", speed: 35 },
+  { left: "13%", top: "62%", w: 14, depth: "far", speed: 25 },
+  { left: "58%", top: "66%", w: 16, depth: "far", speed: 30 },
+  { left: "79%", top: "62%", w: 18, depth: "near", speed: 90 },
 ];
 
-export function Noise() {
+export function Noise(props: NoiseProps) {
   return (
     <section className="noise" aria-label="De los pendientes a los resultados">
       <div className="noise__stage">
-        {NOISE.map((n) => (
+        {NOISE.map((n, i) =>
+          props.images[i]?.src ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            key={n.src}
+            key={i}
             className="noise__img"
-            src={`/img/noise-${n.src}.webp`}
+            src={props.images[i].src}
             alt=""
             loading="lazy"
             data-speed={n.speed}
             data-depth={n.depth}
             style={{ left: n.left, top: n.top, ["--w" as string]: `${n.w}vw` }}
           />
-        ))}
+          ) : null,
+        )}
         <div className="noise__text">
           <h2 className="display" data-reveal="lines">
-            En un mundo lleno de
-            <br />
-            pendientes
+            <Lines text={props.text} />
           </h2>
         </div>
         <div className="noise__mask">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/img/hero-b.webp" alt="" loading="lazy" />
+          <img src={props.revealImage} alt="" loading="lazy" />
           <div className="noise__reveal">
             <h2 className="display">
               <span className="rv" style={{ display: "block" }}>
-                Convierte la estrategia
+                {props.revealSans}
               </span>
               <span className="rv serif" style={{ display: "block" }}>
-                en resultados
+                {props.revealSerif}
               </span>
             </h2>
           </div>
@@ -111,48 +111,44 @@ export function Noise() {
   );
 }
 
-export function About() {
+export function About(props: AboutProps) {
+  const { contact } = useSettings();
+  const contactHref = useContactHref();
+  const experience = useBlock("Experience")?.items ?? [];
   const roles = experience.flatMap((e) => e.roles.map((r) => ({ ...r, org: e.org })));
   return (
     <section className="section" id="sobre-mi" data-section>
       <div className="about">
         <div className="about__photo" data-reveal="clip">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/img/ana-retrato.webp" alt="Retrato de Ana Margarita Aguirre Quintanar" loading="lazy" />
+          <img src={props.photo} alt={props.alt} loading="lazy" />
         </div>
         <div>
           <span className="small-tag" data-reveal="up">
-            (Sobre mí)
+            {props.label}
           </span>
           <h2 className="display" style={{ marginTop: "0.75rem" }} data-reveal="lines">
-            Ana <span className="serif">Aguirre</span>
+            {props.titleSans} <span className="serif">{props.titleSerif}</span>
           </h2>
           <div className="about__bio">
-            <p data-reveal="up">
-              Soy <strong>{site.fullName}</strong>, profesional en Pedagogía con Maestría en Dirección de Negocios y más
-              de 15 años de trayectoria en gestión de proyectos, operaciones y soluciones de educación digital. He
-              coordinado iniciativas multidisciplinarias, proyectos corporativos, procesos de implementación y equipos
-              de trabajo en organizaciones corporativas, educativas y públicas, conectando necesidades estratégicas con
-              la ejecución operativa.
-            </p>
-            <p data-reveal="up">
-              Hoy pongo esa experiencia al servicio de organizaciones que buscan estructurar, modernizar o impulsar sus
-              proyectos, mediante un enfoque de consultoría que integra estrategia, gestión y colaboración tecnológica
-              especializada.
-            </p>
+            {paragraphs(props.bio).map((p, i) => (
+              <p key={i} data-reveal="up">
+                <Inline text={p} />
+              </p>
+            ))}
           </div>
           <div className="skills" data-reveal="up">
-            {skills.map((s) => (
-              <span key={s} className="chip">
+            {props.skills.map((s, i) => (
+              <span key={i} className="chip">
                 {s}
               </span>
             ))}
           </div>
 
           <div className="timeline">
-            <span className="small-tag">Trayectoria</span>
-            {roles.map((r) => (
-              <div key={r.title} className="timeline__row" data-reveal="up">
+            <span className="small-tag">{props.timelineLabel}</span>
+            {roles.map((r, i) => (
+              <div key={i} className="timeline__row" data-reveal="up">
                 <span className="timeline__role">{r.title}</span>
                 <span className="timeline__period">{r.period}</span>
                 <span className="timeline__org">{r.org}</span>
@@ -161,13 +157,13 @@ export function About() {
           </div>
 
           <div style={{ marginTop: "2.5rem", display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-            {site.contact.linkedin && (
-              <Pill href={site.contact.linkedin} cursor="LINKEDIN">
-                Ver perfil en LinkedIn
+            {contact.linkedin && (
+              <Pill href={contact.linkedin} cursor="LINKEDIN">
+                {props.linkedinLabel}
               </Pill>
             )}
             <Pill href={contactHref()} variant="ghost" cursor="ESCRÍBEME">
-              Platiquemos
+              {props.cta}
             </Pill>
           </div>
         </div>
@@ -176,15 +172,14 @@ export function About() {
   );
 }
 
-export function Organizations() {
-  const row1 = [...organizations.corporate, ...organizations.education];
-  const row2 = organizations.public;
+export function Organizations(props: OrganizationsProps) {
+  const { row1, row2 } = props;
   const track = (items: string[]) => [...items, ...items, ...items, ...items];
   return (
     <section className="orgs" data-nav="light" aria-labelledby="orgs-title">
       <div className="orgs__head">
         <h2 className="display" id="orgs-title" style={{ fontSize: "clamp(2.2rem, 5vw, 4.5rem)" }} data-reveal="lines">
-          Organizaciones con las que <span className="serif">he colaborado</span>
+          <Inline text={props.title} />
         </h2>
       </div>
       <div className="marquee" data-dir="1" aria-hidden="true">
@@ -198,21 +193,21 @@ export function Organizations() {
         ))}
       </div>
       <p className="sr-only">{[...row1, ...row2].join(", ")}</p>
-      <p className="orgs__note">Proyectos realizados como parte de los equipos de Academia Global, Universidad Insurgentes, Espacios en Red y Servicios y LUTAN.</p>
+      <p className="orgs__note">{props.note}</p>
     </section>
   );
 }
 
-export function Education() {
+export function Education(props: EducationProps) {
   return (
     <section className="section" id="formacion" aria-labelledby="formacion-title">
       <h2 className="display" id="formacion-title" data-reveal="lines">
-        Formación
+        {props.title}
       </h2>
       <div style={{ marginTop: "2rem" }}>
         <div className="hr" data-reveal="draw" />
-        {education.map((e, i) => (
-          <div key={e.title} className="edu-row">
+        {props.rows.map((e, i) => (
+          <div key={i} className="edu-row">
             <span className="edu-row__title" data-reveal="up">
               {e.title}
             </span>
@@ -228,20 +223,20 @@ export function Education() {
       </div>
       <div style={{ marginTop: "3rem", display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(16rem, 1fr))" }}>
         <div data-reveal="up">
-          <span className="small-tag">Herramientas</span>
+          <span className="small-tag">{props.toolsLabel}</span>
           <div className="skills" style={{ marginTop: "0.75rem" }}>
-            {tools.map((t) => (
-              <span key={t} className="chip">
+            {props.tools.map((t, i) => (
+              <span key={i} className="chip">
                 {t}
               </span>
             ))}
           </div>
         </div>
         <div data-reveal="up">
-          <span className="small-tag">Otras competencias</span>
+          <span className="small-tag">{props.competenciesLabel}</span>
           <div className="skills" style={{ marginTop: "0.75rem" }}>
-            {competencies.map((t) => (
-              <span key={t} className="chip">
+            {props.competencies.map((t, i) => (
+              <span key={i} className="chip">
                 {t}
               </span>
             ))}
@@ -253,7 +248,9 @@ export function Education() {
 }
 
 export function WhatsAppFloat() {
-  if (!site.contact.whatsapp) return null;
+  const { contact, whatsappFloat } = useSettings();
+  const contactHref = useContactHref();
+  if (!contact.whatsapp || !whatsappFloat) return null;
   return (
     <a className="wa" href={contactHref()} target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp">
       <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

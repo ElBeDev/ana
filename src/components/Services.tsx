@@ -1,20 +1,20 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { services, contactHref } from "@/content/site";
+import type { ServiceArt, ServicesProps } from "@/blocks/types";
+import { useContactHref } from "@/blocks/context";
 import { Pill } from "@/components/ui/Pill";
 
-const CODE = "KPI 98% · SLA 24H · FLUJO → AUTO · DATA ✓ · 011 1000 · IA · ETL → TABLERO · OK";
 const GLYPHS = "!@#$%&*<>/{}[]0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const ROWS = 16;
 
-function Art({ id }: { id: string }) {
-  switch (id) {
-    case "consultoria":
+function Art({ art, props }: { art: ServiceArt; props: ServicesProps }) {
+  switch (art) {
+    case "cronograma":
       return (
         <div className="svc__art">
           <div className="art-card" style={{ left: "10%", top: "16%", width: "62%", ["--r" as string]: "-6deg" }}>
-            Cronograma
+            {props.artPlan.title}
             <div className="art-bars">
               <i style={{ width: "70%" }} />
               <i style={{ width: "45%", marginLeft: "30%", background: "var(--wine)" }} />
@@ -22,15 +22,15 @@ function Art({ id }: { id: string }) {
             </div>
           </div>
           <div className="art-card" style={{ right: "8%", top: "70%", width: "46%", ["--r" as string]: "5deg" }}>
-            Avance vs. plan
-            <b>87%</b>
+            {props.artPlan.kpiLabel}
+            <b>{props.artPlan.kpiValue}</b>
           </div>
           <div className="art-card" style={{ left: "8%", bottom: "5%", width: "50%", ["--r" as string]: "-3deg" }}>
-            ✓ Hito: tablero de control
+            {props.artPlan.milestone}
           </div>
         </div>
       );
-    case "desarrollo":
+    case "mockups":
       return (
         <div className="svc__art">
           <div className="mockups">
@@ -39,12 +39,12 @@ function Art({ id }: { id: string }) {
           </div>
         </div>
       );
-    case "transformacion":
+    case "codigo":
       return (
         <div className="svc__art">
           <div className="code-rows mono">
             {Array.from({ length: ROWS }, (_, i) => (
-              <div key={i}>{CODE}</div>
+              <div key={i}>{props.artCode}</div>
             ))}
           </div>
         </div>
@@ -53,13 +53,9 @@ function Art({ id }: { id: string }) {
       return (
         <div className="svc__art">
           <div className="courses">
-            {[
-              ["Campus virtual", "72%"],
-              ["Universidad corporativa", "88%"],
-              ["Certificación", "54%"],
-            ].map(([t, p]) => (
-              <div key={t} className="course" style={{ ["--p" as string]: p }}>
-                {t}
+            {props.artCourses.map(({ label, pct }, i) => (
+              <div key={i} className="course" style={{ ["--p" as string]: `${pct}%` }}>
+                {label}
                 <div className="bar">
                   <i />
                 </div>
@@ -71,8 +67,10 @@ function Art({ id }: { id: string }) {
   }
 }
 
-export function Services() {
+export function Services(props: ServicesProps) {
   const grid = useRef<HTMLDivElement>(null);
+  const contactHref = useContactHref();
+  const code = props.artCode;
 
   useEffect(() => {
     const root = grid.current;
@@ -88,16 +86,16 @@ export function Services() {
       timer = window.setInterval(() => {
         elapsed += 50;
         rows.forEach((row) => {
-          row.textContent = [...CODE].map((c) => (c === " " ? " " : GLYPHS[(Math.random() * GLYPHS.length) | 0])).join("");
+          row.textContent = [...code].map((c) => (c === " " ? " " : GLYPHS[(Math.random() * GLYPHS.length) | 0])).join("");
         });
         if (elapsed >= 350) {
           clearInterval(timer);
           timer = 0;
-          rows.forEach((row) => (row.textContent = CODE));
+          rows.forEach((row) => (row.textContent = code));
         }
       }, 50);
     };
-    const codePanel = root.querySelector<HTMLElement>('[data-id="transformacion"]');
+    const codePanel = root.querySelector<HTMLElement>('[data-art="codigo"]');
     codePanel?.addEventListener("pointerenter", scramble);
     codePanel?.addEventListener("pointerleave", scramble);
 
@@ -130,32 +128,32 @@ export function Services() {
       codePanel?.removeEventListener("pointerenter", scramble);
       codePanel?.removeEventListener("pointerleave", scramble);
     };
-  }, []);
+  }, [code]);
 
   return (
     <section id="servicios" data-section style={{ paddingTop: "clamp(4rem, 8vw, 7rem)" }}>
       <div className="svc-head">
         <h2 className="display" data-reveal="lines">
-          Cómo puedo ayudarte
+          {props.title}
         </h2>
         <span className="svc-count" data-reveal="up">
-          (04)
+          {props.count}
         </span>
       </div>
       <div className="svc-grid" ref={grid} data-nav="light">
-        {services.map((s) => (
-          <article key={s.id} className="svc" data-id={s.id} tabIndex={0}>
+        {props.items.map((s, i) => (
+          <article key={i} className="svc" data-art={s.art} tabIndex={0}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="svc__img" src={s.image} alt="" loading="lazy" />
             <div className="svc__dim" />
-            <Art id={s.id} />
+            <Art art={s.art} props={props} />
             <span className="svc__num tag">{s.num}</span>
             <h3 className="svc__title">{s.title}</h3>
             <div className="svc__details">
               <h3 aria-hidden="true">{s.title}</h3>
               <ul>
-                {s.details.map((d) => (
-                  <li key={d}>{d}</li>
+                {s.details.map((d, j) => (
+                  <li key={j}>{d}</li>
                 ))}
               </ul>
               <Pill href={contactHref(s.message)} variant="light" cursor="ESCRÍBEME">

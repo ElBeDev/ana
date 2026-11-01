@@ -1,0 +1,97 @@
+/* Editor (Puck) a pantalla completa con los colores del panel. */
+
+.ed {
+  --puck-color-azure-04: var(--blue);
+  --puck-color-azure-05: var(--blue);
+  height: 100svh;
+}
+
+.ed-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+}
+@media (max-width: 1200px) {
+  .ed-status {
+    display: none;
+  }
+}
+
+.ed-status {
+  font-size: 0.8rem;
+  color: #5d6470;
+  margin-right: 0.5rem;
+}
+.ed-status.is-error {
+  color: var(--wine);
+  font-weight: 600;
+}
+
+.ed-help {
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+.ed-help h3 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.ed-help ul {
+  display: grid;
+  gap: 0.6rem;
+  padding-left: 1rem;
+  list-style: disc;
+}
+.ed-help code {
+  font-family: var(--font-mono), monospace;
+  font-size: 0.8em;
+  background: var(--cream);
+  padding: 0.05rem 0.3rem;
+  border-radius: 4px;
+}
+
+.ed-lines {
+  width: 100%;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--puck-color-grey-09, #dcdcdc);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  resize: vertical;
+  background: #fff;
+}
+
+.ed-media {
+  display: grid;
+  gap: 0.5rem;
+}
+.ed-media__thumb {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid var(--puck-color-grey-09, #dcdcdc);
+  background: var(--cream);
+}
+.ed-media__thumb--empty {
+  display: grid;
+  place-items: center;
+  color: #8a8f98;
+  font-size: 0.8rem;
+}
+.ed-media input {
+  width: 100%;
+  padding: 0.45rem 0.6rem;
+  border: 1px solid var(--puck-color-grey-09, #dcdcdc);
+  border-radius: 4px;
+  font: inherit;
+  font-size: 0.8rem;
+}
+.ed-media__buttons {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}

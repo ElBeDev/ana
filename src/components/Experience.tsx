@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { experience, type Experience as Exp } from "@/content/site";
+import type { ExperienceItem, ExperienceProps } from "@/blocks/types";
 import { gsap, isFinePointer, lockScroll } from "@/lib/motion";
 import { Pill, Roll } from "@/components/ui/Pill";
 
-export function Experience() {
-  const [active, setActive] = useState<Exp | null>(null);
+export function Experience(props: ExperienceProps) {
+  const [active, setActive] = useState<ExperienceItem | null>(null);
   const grid = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
 
@@ -35,7 +35,7 @@ export function Experience() {
       };
     });
     return () => offs.forEach((off) => off());
-  }, []);
+  }, [props.items.length]);
 
   useEffect(() => {
     if (!active) return;
@@ -53,18 +53,18 @@ export function Experience() {
     <section className="section" id="experiencia" data-section>
       <div className="exp-head">
         <h2 className="display" data-reveal="lines">
-          Experiencia destacada
+          {props.title}
         </h2>
         <span className="small-tag" data-reveal="up">
-          (2010 – 2026)
+          {props.period}
         </span>
       </div>
       <div className="hr" style={{ marginTop: "1.5rem" }} data-reveal="draw" />
 
       <div className="exp-grid" ref={grid}>
-        {experience.map((exp, i) => (
+        {props.items.map((exp, i) => (
           <button
-            key={exp.id}
+            key={i}
             type="button"
             className="exp-card"
             data-cursor="VER"
@@ -82,7 +82,7 @@ export function Experience() {
             <div className="exp-card__meta">
               <span className="tag">{exp.org}</span>
               <span className="exp-card__more">
-                <Roll>Ver detalle</Roll>
+                <Roll>{props.moreLabel}</Roll>
               </span>
             </div>
             <div className="exp-card__sub">
@@ -93,7 +93,7 @@ export function Experience() {
       </div>
 
       <div style={{ marginTop: "4rem", display: "flex", justifyContent: "center" }}>
-        <Pill href="#sobre-mi">Ver trayectoria completa</Pill>
+        <Pill href={props.buttonHref}>{props.buttonLabel}</Pill>
       </div>
 
       <div className={`drawer ${active ? "is-open" : ""}`} aria-hidden={!active}>
@@ -113,7 +113,7 @@ export function Experience() {
               onClick={() => setActive(null)}
               tabIndex={active ? 0 : -1}
             >
-              Cerrar ✕
+              {props.closeLabel}
             </button>
           </div>
           {active && (
@@ -126,13 +126,13 @@ export function Experience() {
                 {active.tag} · {active.period}
               </span>
               <h3>{active.org}</h3>
-              {active.roles.map((role) => (
-                <div key={role.title} className="drawer__role">
+              {active.roles.map((role, i) => (
+                <div key={i} className="drawer__role">
                   <h4>{role.title}</h4>
                   <div className="small-tag">{role.period}</div>
                   <ul>
-                    {role.points.map((p) => (
-                      <li key={p}>{p}</li>
+                    {role.points.map((p, j) => (
+                      <li key={j}>{p}</li>
                     ))}
                   </ul>
                 </div>

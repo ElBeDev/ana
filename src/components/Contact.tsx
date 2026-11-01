@@ -1,17 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { site, contactHref } from "@/content/site";
+import { site } from "@/content/site";
+import type { ContactProps } from "@/blocks/types";
+import { useContactHref, useSettings } from "@/blocks/context";
+import { Inline } from "@/lib/inline";
 import { gsap } from "@/lib/motion";
 import { Pill, Roll } from "@/components/ui/Pill";
-
-const CYCLE = [
-  "/img/ana-blue.webp",
-  "/img/exp-academia.webp",
-  "/img/ana-wine.webp",
-  "/img/svc-3.webp",
-  "/img/exp-insurgentes.webp",
-];
 
 function CdmxTime() {
   const [time, setTime] = useState("--:--");
@@ -25,9 +20,12 @@ function CdmxTime() {
   return <span>CDMX {time}</span>;
 }
 
-export function Contact() {
+export function Contact(props: ContactProps) {
   const mask = useRef<HTMLDivElement>(null);
   const btn = useRef<HTMLDivElement>(null);
+  const { identity, contact } = useSettings();
+  const contactHref = useContactHref();
+  const cycleKey = props.cycle.map((c) => c.src).join("|");
 
   // Imagen enmascarada: en reposo en B/N; en hover del botón cicla imágenes a color cada 600 ms
   useEffect(() => {
@@ -62,27 +60,27 @@ export function Contact() {
       trigger.removeEventListener("pointerenter", enter);
       trigger.removeEventListener("pointerleave", leave);
     };
-  }, []);
+  }, [cycleKey]);
 
-  const { whatsapp, email, linkedin } = site.contact;
+  const { whatsapp, email, linkedin } = contact;
 
   return (
     <footer className="contact" id="contacto" data-section>
       <div className="contact__center">
         <div className="contact__mask" ref={mask} data-reveal="up">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/img/ana-ink.webp" alt="" className="is-active is-bw" loading="lazy" />
-          {CYCLE.map((src) => (
+          <img src={props.image} alt="" className="is-active is-bw" loading="lazy" />
+          {props.cycle.map(({ src }, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={src} src={src} alt="" loading="lazy" />
+            <img key={i} src={src} alt="" loading="lazy" />
           ))}
         </div>
         <p className="contact__lead" data-reveal="up">
-          Cuéntame tu proyecto y lo convertimos <span className="serif">en una solución.</span>
+          <Inline text={props.lead} />
         </p>
         <div ref={btn} data-reveal="up">
           <Pill href={contactHref()} cursor="ESCRÍBEME">
-            Empecemos
+            {props.button}
           </Pill>
         </div>
       </div>
@@ -94,14 +92,14 @@ export function Contact() {
               <Roll>LinkedIn</Roll>
             </a>
           ) : (
-            <span>{site.role}</span>
+            <span>{identity.role}</span>
           )}
           {whatsapp && (
             <a href={contactHref()} target="_blank" rel="noopener noreferrer">
               <Roll>WhatsApp</Roll>
             </a>
           )}
-          <span>{site.descriptor}</span>
+          <span>{identity.descriptor}</span>
         </div>
         <div className="footer-links__row">
           {email ? (
@@ -113,21 +111,21 @@ export function Contact() {
               <Roll>Volver arriba</Roll>
             </a>
           )}
-          <span className="muted">Todos los derechos reservados · Ana Aguirre © 2026</span>
+          <span className="muted">{props.copyright}</span>
           <CdmxTime />
         </div>
       </div>
 
       <div className="bigname" data-reveal="chars" aria-hidden="true">
         <b>
-          {[..."ANA"].map((c, i) => (
+          {[...props.bigSans].map((c, i) => (
             <span key={i} className="ch">
               {c}
             </span>
           ))}
         </b>
         <span className="serif">
-          {[..."Aguirre"].map((c, i) => (
+          {[...props.bigSerif].map((c, i) => (
             <span key={i} className="ch">
               {c}
             </span>

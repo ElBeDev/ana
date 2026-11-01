@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useSettings } from "@/blocks/context";
 import { gsap, EASE_MAIN, lockScroll, prefersReducedMotion } from "@/lib/motion";
-
-const IMAGES = ["/img/ana-blue.webp", "/img/exp-academia.webp", "/img/ana-wine.webp"];
 
 /** Entrada del hero (7.2): nav, imagen, título, línea, párrafo, etiquetas y CTA. */
 function heroIntro(start = 0) {
@@ -25,6 +24,7 @@ function heroIntro(start = 0) {
 
 export function Loader() {
   const root = useRef<HTMLDivElement>(null);
+  const { loader } = useSettings();
 
   useEffect(() => {
     const html = document.documentElement;
@@ -68,13 +68,16 @@ export function Loader() {
       <div className="loader__panel loader__panel--r" />
       <div className="loader__center">
         <div className="loader__img">
-          {IMAGES.map((src) => (
+          {loader.images.map(({ src }, i) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={src} src={src} alt="" />
+            <img key={i} src={src} alt="" />
           ))}
         </div>
         <div className="loader__word">
-          Ana <span className="serif" style={{ textTransform: "none", fontWeight: 400 }}>Aguirre</span>
+          {loader.wordSans}{" "}
+          <span className="serif" style={{ textTransform: "none", fontWeight: 400 }}>
+            {loader.wordSerif}
+          </span>
         </div>
       </div>
     </div>
