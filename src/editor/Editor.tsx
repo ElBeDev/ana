@@ -29,7 +29,9 @@ type EditorApi = {
 const EditorContext = createContext<EditorApi | null>(null);
 const useEditor = () => use(EditorContext)!;
 
-const time = (iso: string) => new Date(iso).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit" });
+// Zona horaria fija: el editor se renderiza también en el servidor (UTC) y debe coincidir con el navegador.
+const time = (iso: string) =>
+  new Date(iso).toLocaleTimeString("es-MX", { hour: "2-digit", minute: "2-digit", timeZone: "America/Mexico_City" });
 
 function HeaderActions() {
   const { status, save, publish } = useEditor();
