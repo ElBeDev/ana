@@ -1,7 +1,7 @@
 # Admin Panel tipo Elementor — Plan e implementación
 ### Landing de Ana Aguirre · Next.js 16.4 + React 19.3 + GSAP + Lenis + Puck
 
-> **Estado:** aprobado el 2026-11-01 · **construido y verificado en local** en la rama `admin-panel` (sin commits todavía). Falta conectar Neon y Blob en Vercel y desplegar (sección 9).
+> **Estado:** construido y verificado · commit `8093309` en `admin-panel` · Neon (`ana-db`) y Blob (`ana-media`) conectados a Vercel, tablas creadas y admin creado · preview lista · **falta pasar a producción** (sección 9, pasos 5–7).
 > Este archivo se actualiza al terminar cada fase (tablero en la sección 1).
 
 ---
@@ -298,7 +298,9 @@ login_attempts  id, key (ip|email), success, created_at
 
 ---
 
-## 9. Despliegue en Vercel (pendiente)
+## 9. Despliegue en Vercel
+
+Hecho el 2026-11-01: pasos 1–4 (Neon `ana-db`, Blob público `ana-media`, `SESSION_SECRET` en Production/Preview, migración y seed contra Neon) y preview desde `admin-panel`. Desde esta máquina la CLI de Vercel necesita un proxy local porque abrir conexión con api.vercel.com tarda ~20 s (la CLI se rinde a los 10 s).
 
 1. **Neon:** en el proyecto de Vercel → *Storage* / *Marketplace* → **Neon** → crear y conectar a todos los entornos (o `vercel integration add neon`). Agrega `DATABASE_URL` (con pooler; el código usa `prepare: false`, compatible).
 2. **Blob:** *Storage* → **Blob** → crear un store **público** y conectarlo. Agrega `BLOB_READ_WRITE_TOKEN`.
