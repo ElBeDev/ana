@@ -90,19 +90,20 @@ export function Motion() {
       document.querySelectorAll<HTMLElement>("[data-count]").forEach((el, i) => {
         const end = Number(el.dataset.count);
         const prefix = el.dataset.prefix ?? "";
+        const suffix = el.dataset.suffix ?? "";
         if (reduced) {
-          el.textContent = prefix + fmt.format(end);
+          el.textContent = prefix + fmt.format(end) + suffix;
           return;
         }
         const state = { v: 0 };
-        el.textContent = prefix + "0";
+        el.textContent = prefix + "0" + suffix;
         gsap.to(state, {
           v: end,
           duration: 1.6,
           ease: EASE_MAIN,
           delay: (i % 5) * 0.1,
           scrollTrigger: { trigger: el, start: "top 85%", once: true },
-          onUpdate: () => (el.textContent = prefix + fmt.format(Math.round(state.v))),
+          onUpdate: () => (el.textContent = prefix + fmt.format(Math.round(state.v)) + suffix),
         });
       });
 

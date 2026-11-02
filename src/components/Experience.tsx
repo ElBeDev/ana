@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { ExperienceItem, ExperienceProps } from "@/blocks/types";
 import { gsap, isFinePointer, lockScroll } from "@/lib/motion";
 import { Pill, Roll } from "@/components/ui/Pill";
+import { paragraphs } from "@/lib/inline";
 
 export function Experience(props: ExperienceProps) {
   const [active, setActive] = useState<ExperienceItem | null>(null);
@@ -80,14 +81,15 @@ export function Experience(props: ExperienceProps) {
               </div>
             </div>
             <div className="exp-card__meta">
-              <span className="tag">{exp.org}</span>
+              <span className="tag">
+                {exp.org} · {exp.period}
+              </span>
               <span className="exp-card__more">
                 <Roll>{props.moreLabel}</Roll>
               </span>
             </div>
-            <div className="exp-card__sub">
-              {exp.tag} · {exp.meta} · {exp.period}
-            </div>
+            <div className="exp-card__title">{exp.headline}</div>
+            <div className="exp-card__sub">{exp.summary}</div>
           </button>
         ))}
       </div>
@@ -122,21 +124,20 @@ export function Experience(props: ExperienceProps) {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={active.image} alt="" />
               </div>
-              <span className="small-tag">
-                {active.tag} · {active.period}
-              </span>
+              <span className="small-tag">{active.period}</span>
               <h3>{active.org}</h3>
-              {active.roles.map((role, i) => (
-                <div key={i} className="drawer__role">
-                  <h4>{role.title}</h4>
-                  <div className="small-tag">{role.period}</div>
-                  <ul>
-                    {role.points.map((p, j) => (
-                      <li key={j}>{p}</li>
-                    ))}
-                  </ul>
+              <p className="drawer__headline">{active.headline}</p>
+              <div className="drawer__text">
+                {paragraphs(active.detail).map((p, i) => (
+                  <p key={i}>{p}</p>
+                ))}
+              </div>
+              {active.scope && (
+                <div className="drawer__scope">
+                  <span className="small-tag">{props.scopeLabel}</span>
+                  <p>{active.scope}</p>
                 </div>
-              ))}
+              )}
             </>
           )}
         </aside>

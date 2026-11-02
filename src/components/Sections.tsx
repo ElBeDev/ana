@@ -21,12 +21,18 @@ export function Intro(props: IntroProps) {
       <p className="intro__text" data-scrub-words>
         <Inline text={props.text} />
       </p>
+      {props.statsTitle && (
+        <h2 className="stats__title" data-reveal="up">
+          {props.statsTitle}
+        </h2>
+      )}
       <div className="stats">
         {props.stats.map((s, i) => (
           <div key={i} className="stat" data-reveal="up">
-            <div className="stat__num" data-count={s.value} data-prefix={s.prefix}>
+            <div className="stat__num" data-count={s.value} data-prefix={s.prefix} data-suffix={s.suffix}>
               {s.prefix}
               {s.value.toLocaleString("es-MX")}
+              {s.suffix}
             </div>
             <p className="stat__label">{s.label}</p>
           </div>
@@ -42,6 +48,11 @@ export function Process(props: ProcessProps) {
       <h2 className="display" id="proceso-title" data-reveal="lines">
         <Inline text={props.title} />
       </h2>
+      {props.lead && (
+        <p className="process__lead" data-reveal="up">
+          {props.lead}
+        </p>
+      )}
       <div className="process">
         <div className="process__track" />
         <div className="process__line" />

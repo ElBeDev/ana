@@ -84,12 +84,13 @@ export const defaultLanding: LandingData = {
         id: "intro",
         label: "(Sobre mí)",
         text: "Soy Ana Aguirre. Conecto la estrategia de negocio con soluciones operativas y tecnológicas *que sí se ejecutan.*",
+        statsTitle: "Trayectoria que conecta estrategia, equipos y ejecución.",
         stats: [
-          { value: 15, prefix: "+", label: "años de trayectoria" },
-          { value: 3000, prefix: "+", label: "estudiantes en estrategias de atención y retención" },
-          { value: 10, prefix: "+", label: "licitaciones con 100% de cumplimiento normativo" },
-          { value: 5, prefix: "", label: "programas educativos gestionados" },
-          { value: 20, prefix: "+", label: "capacitadores coordinados por proyecto" },
+          { prefix: "", value: 15, suffix: "+", label: "años de experiencia en proyectos, operaciones y aprendizaje" },
+          { prefix: "", value: 10, suffix: "+", label: "proyectos de licitación pública y privada coordinados" },
+          { prefix: "", value: 5, suffix: "", label: "líneas educativas articuladas en un ecosistema online" },
+          { prefix: "", value: 15, suffix: "", label: "profesionales liderados en un mismo equipo" },
+          { prefix: "", value: 3000, suffix: "+", label: "estudiantes dentro del alcance de estrategias de atención y seguimiento" },
         ],
       },
     },
@@ -103,91 +104,62 @@ export const defaultLanding: LandingData = {
         buttonLabel: "Ver trayectoria completa",
         buttonHref: "#sobre-mi",
         closeLabel: "Cerrar ✕",
+        scopeLabel: "Alcance destacado",
         items: [
           {
             org: "Academia Global",
-            tag: "Campus online corporativos",
-            meta: "PMO · Gestión de portafolio académico",
             period: "2022 – 2026",
             image: "/img/exp-academia.webp",
+            headline: "De la estrategia a la operación de campus digitales",
+            summary:
+              "Coordinación de proyectos, procesos y equipos para la operación de cinco líneas educativas y la implementación de campus corporativos.",
+            detail:
+              "Conecté la estrategia académica con la ejecución diaria de un ecosistema de educación online. Articulé el trabajo entre equipos académicos, tecnológicos, comerciales y administrativos para dar seguimiento a prioridades, resolver bloqueos y asegurar la continuidad de los proyectos.\n\nParticipé en la creación y puesta en marcha de campus para clientes corporativos, traduciendo sus necesidades en requerimientos, actividades y entregables. Mi contribución abarcó la planeación, el seguimiento operativo, la estandarización de procesos y la consolidación de información para la toma de decisiones.",
+            scope:
+              "Cinco líneas educativas: bachillerato, licenciaturas, ingenierías, maestrías y certificaciones. Participación en proyectos para organizaciones como Bayer, Coppel, Alpura, INDEX y GRG.",
             roles: [
-              {
-                title: "Líder de planeación y gestión de proyectos",
-                period: "Feb 2026 – Sep 2026",
-                points: [
-                  "Planeación, coordinación transversal y seguimiento del portafolio de proyectos académicos del ecosistema de campus online.",
-                  "Gobernanza y control: cronogramas, hitos, flujos de trabajo, control de versiones y reportes para decisiones ejecutivas.",
-                  "Estandarización de prácticas operativas y enlace entre Dirección Académica, Operación y procesos administrativos.",
-                  "Gestión de riesgos y resolución de incidencias operativas.",
-                ],
-              },
-              {
-                title: "PM en Dirección de Estrategia Académica",
-                period: "Abr 2022 – Feb 2026",
-                points: [
-                  "Dirección operativa de 5 programas educativos: Preparatoria, Licenciatura, Ingeniería, Maestrías y Certificaciones.",
-                  "Arquitectura operativa y supervisión de los programas de Maestría y Bachillerato.",
-                  "Operación de campus online para cuentas institucionales como Bayer, Coppel, Alpura, GRG, Toks, Index y el Sistema Penitenciario de Sinaloa; despliegue inicial de Index y GRG.",
-                  "Puente táctico para resolver bloqueos entre las PM de cada área y los departamentos de soporte.",
-                ],
-              },
+              { title: "Líder de planeación y gestión de proyectos", period: "Feb 2026 – Sep 2026" },
+              { title: "PM en Dirección de Estrategia Académica", period: "Abr 2022 – Feb 2026" },
             ],
           },
           {
             org: "Universidad Insurgentes",
-            tag: "+3,000 estudiantes",
-            meta: "Retención · KPIs · Reportes ejecutivos",
             period: "2020 – 2022",
             image: "/img/exp-insurgentes.webp",
-            roles: [
-              {
-                title: "Coordinadora de Orientación Educativa",
-                period: "Feb 2020 – Mar 2022",
-                points: [
-                  "Estrategias de atención, transición y continuidad académica para más de 3,000 estudiantes de Bachillerato y Licenciatura.",
-                  "Metodologías analíticas y reportes ejecutivos orientados a la retención estudiantil.",
-                  "Diseño de mecanismos de evaluación y seguimiento; auditoría del sistema de evaluación y acreditación.",
-                  "Capacitación docente en herramientas digitales y metodologías innovadoras.",
-                ],
-              },
-            ],
+            headline: "Procesos e información para la continuidad estudiantil",
+            summary:
+              "Coordinación de estrategias de atención y seguimiento para una comunidad de más de 3,000 estudiantes de bachillerato y licenciatura.",
+            detail:
+              "Coordiné estrategias de acompañamiento estudiantil que conectaban la atención individual con las necesidades de operación de la institución. Organicé mecanismos de seguimiento para identificar situaciones de riesgo y orientar acciones de continuidad académica.\n\nDesarrollé reportes ejecutivos y procesos de evaluación de la atención, además de colaborar en la revisión de los sistemas de evaluación y acreditación. Complementé este trabajo con asesoramiento y capacitación docente en herramientas digitales y prácticas educativas.",
+            scope:
+              "Una matrícula de más de 3,000 estudiantes y coordinación con docentes y áreas académicas para atender necesidades de permanencia, transición y seguimiento.",
+            roles: [{ title: "Coordinadora de Orientación Educativa", period: "Feb 2020 – Mar 2022" }],
           },
           {
             org: "Espacios en Red y Servicios",
-            tag: "+10 licitaciones",
-            meta: "Gobierno · Cumplimiento · Equipos",
             period: "2015 – 2019",
             image: "/img/exp-espacios.webp",
-            roles: [
-              {
-                title: "Coordinadora de proyectos especiales",
-                period: "Ene 2015 – Dic 2019",
-                points: [
-                  "Más de 10 proyectos de licitación pública y privada vía Compranet, con 100% de cumplimiento normativo y legal.",
-                  "Cuentas como ASA, Microsoft, CONACYT, SECFIN, Secretaría de Salud de Querétaro y alcaldías de la CDMX.",
-                  "Liderazgo de un equipo de 5 profesionales y coordinación de más de 20 capacitadores externos.",
-                ],
-              },
-            ],
+            headline: "De la licitación a la ejecución del proyecto",
+            summary:
+              "Coordinación integral de proyectos públicos y privados: propuestas, documentación, equipos de especialistas y seguimiento de entregables.",
+            detail:
+              "Coordiné proyectos desde la integración de propuestas para licitaciones hasta su implementación y seguimiento. Traduje los requerimientos de cada contratación en planes de trabajo, recursos y entregables, articulando la documentación administrativa con la ejecución operativa.\n\nLideré al equipo interno de proyectos y coordiné la contratación y participación de capacitadores externos según las necesidades de cada servicio. Esta experiencia fortaleció mi capacidad para gestionar proyectos con múltiples participantes y exigencias documentales específicas.",
+            scope:
+              "Más de 10 proyectos de licitación pública y privada, un equipo directo de cinco profesionales y una red de más de 20 capacitadores. Participación en proyectos para ASA, Microsoft, CONACYT y otras instituciones públicas.",
+            roles: [{ title: "Coordinadora de proyectos especiales", period: "Ene 2015 – Dic 2019" }],
           },
           {
             org: "LUTAN",
-            tag: "Robótica educativa",
-            meta: "Equipo de 15 · Diseño instruccional SEP",
             period: "2010 – 2015",
             image: "/img/exp-lutan.webp",
-            roles: [
-              {
-                title: "Coordinadora de planificación estratégica",
-                period: "Ene 2010 – Ene 2015",
-                points: [
-                  "Dirección de un equipo de 15 profesionales en robótica educativa y capacitación docente.",
-                  "Diseño instruccional de planes de estudio alineados a los marcos curriculares de la SEP.",
-                  "Administración de recursos materiales y humanos por proyecto.",
-                  "Consultoría técnica en el cierre de ventas corporativas.",
-                ],
-              },
-            ],
+            headline: "Del modelo educativo a su implementación en el aula",
+            summary:
+              "Coordinación de equipos, contenidos y recursos para implementar programas de robótica educativa y capacitación docente.",
+            detail:
+              "Coordiné la implementación de proyectos de robótica educativa, conectando el diseño de contenidos con la preparación de los docentes y las condiciones de operación en el aula.\n\nLideré la asignación de responsabilidades y recursos de un equipo de 15 profesionales, y participé en el desarrollo de planes y contenidos alineados con los marcos curriculares de la SEP. También acompañé procesos comerciales mediante demostraciones y asesoría técnica para explicar el valor y las posibilidades del modelo educativo.",
+            scope:
+              "Liderazgo de 15 profesionales, formación docente y coordinación de los recursos humanos y materiales necesarios para ejecutar los programas.",
+            roles: [{ title: "Coordinadora de planificación estratégica", period: "Ene 2010 – Ene 2015" }],
           },
         ],
       },
@@ -276,12 +248,13 @@ export const defaultLanding: LandingData = {
       type: "Process",
       props: {
         id: "process",
-        title: "Cómo *trabajo*",
+        title: "De lo que necesitas *a lo que funciona*",
+        lead: "¿Una idea por desarrollar o un proceso que te complica el trabajo? Te ayudo a convertirlo en acciones claras.",
         steps: [
-          { title: "Diagnóstico", text: "Entender la necesidad, el contexto y los objetivos." },
-          { title: "Planeación", text: "Definir alcance, procesos, cronograma, hitos e indicadores." },
-          { title: "Ejecución", text: "Implementar con el equipo y los especialistas adecuados, resolviendo bloqueos." },
-          { title: "Seguimiento", text: "Medir, reportar y ajustar con mejora continua." },
+          { title: "Entendemos tu necesidad", text: "Identificamos qué quieres lograr y qué te está frenando." },
+          { title: "Trazamos la ruta", text: "Definimos acciones, responsables, recursos y tiempos." },
+          { title: "Lo ponemos en marcha", text: "Coordino la implementación con tu equipo y los especialistas necesarios." },
+          { title: "Revisamos y ajustamos", text: "Evaluamos avances y dejamos herramientas para dar continuidad." },
         ],
       },
     },
@@ -314,11 +287,14 @@ export const defaultLanding: LandingData = {
         alt: "Retrato de Ana Margarita Aguirre Quintanar",
         bio: "Soy **Ana Margarita Aguirre Quintanar**, profesional en Pedagogía con Maestría en Dirección de Negocios y más de 15 años de trayectoria en gestión de proyectos, operaciones y soluciones de educación digital. He coordinado iniciativas multidisciplinarias, proyectos corporativos, procesos de implementación y equipos de trabajo en organizaciones corporativas, educativas y públicas, conectando necesidades estratégicas con la ejecución operativa.\n\nHoy pongo esa experiencia al servicio de organizaciones que buscan estructurar, modernizar o impulsar sus proyectos, mediante un enfoque de consultoría que integra estrategia, gestión y colaboración tecnológica especializada.",
         skills: [
-          "PMO",
+          "Diagnóstico y planeación estratégica",
+          "Gestión integral de proyectos",
           "Optimización de procesos",
-          "Transformación digital e IA",
-          "Liderazgo de equipos y gestión transversal",
-          "Planificación estratégica",
+          "Coordinación de equipos y especialistas",
+          "Definición de requerimientos de negocio",
+          "Coordinación de soluciones digitales",
+          "Diseño de proyectos educativos y capacitación",
+          "Indicadores y seguimiento de resultados",
         ],
         timelineLabel: "Trayectoria",
         linkedinLabel: "Ver perfil en LinkedIn",

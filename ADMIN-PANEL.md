@@ -200,10 +200,10 @@ login_attempts  id, key (ip|email), success, created_at
 | Bloque | Campos editables |
 |---|---|
 | **Hero** | Título sans, título serif, etiqueta izq., párrafo, etiqueta der., texto del CTA, imágenes A y B (desktop y móvil), alt |
-| **Intro** | Etiqueta, texto (con `*serif*`), cifras (valor, prefijo, etiqueta) |
-| **Experiencia** | Título, periodo, tarjetas (org, etiqueta, meta, periodo, imagen, puestos → título, periodo, logros), texto del botón final |
+| **Intro** | Etiqueta, texto (con `*serif*`), título de las cifras, cifras (antes, valor, después, etiqueta) |
+| **Experiencia** | Título, periodo, tarjetas (org, periodo, imagen, título, texto de la tarjeta, texto del detalle, alcance destacado, puestos → título y periodo para la trayectoria de "Sobre mí"), textos de botones |
 | **Servicios** | Título, contador, paneles (número, título, detalles, CTA, mensaje de WhatsApp, imagen, nota, animación decorativa) y textos de las animaciones (cronograma/KPI, código, cursos con %) |
-| **Cómo trabajo** | Título (con `*serif*`), pasos (título, texto) |
+| **Cómo trabajo** | Título (con `*serif*`), texto bajo el título, pasos (título, texto) |
 | **Ruido** | Texto del ruido, imágenes del ruido (6), imagen revelada, texto revelado sans/serif |
 | **Sobre mí** | Foto, alt, etiqueta, título, bio (párrafos con `**negrita**`), skills, CTA |
 | **Organizaciones** | Título, fila 1, fila 2, nota |
@@ -314,6 +314,8 @@ Hecho el 2026-11-01: pasos 1–4 (Neon `ana-db`, Blob público `ana-media`, `SES
 6. **En producción:** entrar a `/admin` → Editor → **Publicar** una vez (a partir de ahí el sitio sale de la BD).
 7. **Probar en producción:** subir una imagen en Medios, ponerla en el Hero (foto que revela el cursor), publicar y confirmar que el lente WebGL funciona (CORS de Blob). Después, cambiar la contraseña desde Cuenta si hace falta.
 
+> **Cambios de contenido hechos en código:** como el sitio lee lo publicado en la BD, después de cambiar `defaults.ts` hay que copiar esas secciones a la BD: `npm run content:sync -- <Bloque|Bloque.campo>...` (muestra qué cambiaría) y luego con `--apply`. Se ve en el sitio tras el siguiente despliegue.
+
 > Las migraciones no corren en el build a propósito (un preview sin BD no debe fallar). Si cambia `src/db/schema.ts`: `npm run db:generate` y `npm run db:migrate` contra Neon antes de desplegar.
 
 ---
@@ -327,3 +329,4 @@ Hecho el 2026-11-01: pasos 1–4 (Neon `ana-db`, Blob público `ana-media`, `SES
 - **2026-11-01 · F4** — Las imágenes se guardan en el documento como URL (no como id de la biblioteca); al reemplazar una foto se elige otra en el campo. No se migró a `next/image`: las originales ya son WebP optimizadas y las subidas se optimizan en el navegador antes de subir; cambiarlo tocaría las animaciones de máscara/clip sin necesidad. El aviso de `onUploadCompleted` de Blob no se usa (no llega a localhost); el registro lo hace una Server Action tras la subida.
 - **2026-11-01 · F5** — Los ajustes del sitio se construyeron junto con el editor (F3) porque viven en el `root` del mismo documento; F5 fue verificación. `contactHref()` limpia el WhatsApp a dígitos para que el lienzo muestre el link correcto antes de guardar.
 - **2026-11-01 · F6** — La vista previa de una revisión concreta se resolvió como "Restaurar al borrador" + Vista previa (leer una revisión arbitraria dentro de `'use cache'` obligaría a leer cookies, que no se permite ahí). Las páginas del admin leen datos dentro de `<Suspense>` para cumplir la validación de navegación instantánea de Next 16. `getAdmin()` llama a `connection()` porque compara la expiración del token con la hora actual.
+- **2026-11-01 · Contenido** — Experiencia: cada tarjeta muestra "org · periodo", título y texto; el detalle muestra título, párrafos de lo que resolvió en el puesto y "Alcance destacado" (los logros por puesto se quitaron: el CV ya está en la trayectoria de "Sobre mí", que sigue saliendo de los puestos). Cifras: título nuevo y sufijo (`15+`). "Cómo trabajo" con título y texto nuevos. Habilidades de "Sobre mí" reemplazadas por las 8 competencias. Nuevo `npm run content:sync` para pasar a la BD contenido cambiado en código.

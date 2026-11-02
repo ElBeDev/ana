@@ -43,16 +43,18 @@ export type HeroProps = {
   imageBMobile: string;
 };
 
-export type Stat = { value: number; prefix: string; label: string };
-export type IntroProps = { label: string; text: string; stats: Stat[] };
+export type Stat = { value: number; prefix: string; suffix: string; label: string };
+export type IntroProps = { label: string; text: string; statsTitle: string; stats: Stat[] };
 
-export type Role = { title: string; period: string; points: string[] };
+export type Role = { title: string; period: string }; // alimenta la trayectoria de "Sobre mí"
 export type ExperienceItem = {
   org: string;
-  tag: string;
-  meta: string;
   period: string;
   image: string;
+  headline: string; // título de la tarjeta y del detalle
+  summary: string; // texto de la tarjeta
+  detail: string; // párrafos separados por una línea en blanco
+  scope: string; // "Alcance destacado"
   roles: Role[];
 };
 export type ExperienceProps = {
@@ -62,6 +64,7 @@ export type ExperienceProps = {
   buttonLabel: string;
   buttonHref: string;
   closeLabel: string;
+  scopeLabel: string;
   items: ExperienceItem[];
 };
 
@@ -85,7 +88,7 @@ export type ServicesProps = {
   artCourses: { label: string; pct: number }[];
 };
 
-export type ProcessProps = { title: string; steps: { title: string; text: string }[] };
+export type ProcessProps = { title: string; lead: string; steps: { title: string; text: string }[] };
 
 export type NoiseProps = {
   text: string; // los saltos de línea se respetan
