@@ -316,6 +316,8 @@ Hecho el 2026-11-01: pasos 1–4 (Neon `ana-db`, Blob público `ana-media`, `SES
 
 > **Cambios de contenido hechos en código:** como el sitio lee lo publicado en la BD, después de cambiar `defaults.ts` hay que copiar esas secciones a la BD: `npm run content:sync -- <Bloque|Bloque.campo>...` (muestra qué cambiaría) y luego con `--apply`. Se ve en el sitio tras el siguiente despliegue.
 
+> **Dominio:** `ana-aguirre.com` (registrado en Hostinger, DNS en Hostinger). Raíz → A `216.198.79.1` y `64.29.17.1`; `www` → CNAME `43da4d532a3c1269.vercel-dns-017.com.` y en Vercel redirige 308 a la raíz. Los registros de correo de Hostinger (MX, SPF, DKIM, DMARC, autodiscover) no se tocaron. `site.url` usa el dominio fijo en Vercel (metadata, canonical, JSON-LD, `robots.txt`, `sitemap.xml`).
+
 > Las migraciones no corren en el build a propósito (un preview sin BD no debe fallar). Si cambia `src/db/schema.ts`: `npm run db:generate` y `npm run db:migrate` contra Neon antes de desplegar.
 
 ---
@@ -330,3 +332,4 @@ Hecho el 2026-11-01: pasos 1–4 (Neon `ana-db`, Blob público `ana-media`, `SES
 - **2026-11-01 · F5** — Los ajustes del sitio se construyeron junto con el editor (F3) porque viven en el `root` del mismo documento; F5 fue verificación. `contactHref()` limpia el WhatsApp a dígitos para que el lienzo muestre el link correcto antes de guardar.
 - **2026-11-01 · F6** — La vista previa de una revisión concreta se resolvió como "Restaurar al borrador" + Vista previa (leer una revisión arbitraria dentro de `'use cache'` obligaría a leer cookies, que no se permite ahí). Las páginas del admin leen datos dentro de `<Suspense>` para cumplir la validación de navegación instantánea de Next 16. `getAdmin()` llama a `connection()` porque compara la expiración del token con la hora actual.
 - **2026-11-01 · Contenido** — Experiencia: cada tarjeta muestra "org · periodo", título y texto; el detalle muestra título, párrafos de lo que resolvió en el puesto y "Alcance destacado" (los logros por puesto se quitaron: el CV ya está en la trayectoria de "Sobre mí", que sigue saliendo de los puestos). Cifras: título nuevo y sufijo (`15+`). "Cómo trabajo" con título y texto nuevos. Habilidades de "Sobre mí" reemplazadas por las 8 competencias. Nuevo `npm run content:sync` para pasar a la BD contenido cambiado en código.
+- **2026-11-02 · Dominio** — Conectado `ana-aguirre.com` (raíz principal, `www` redirige). `site.url` deja de depender de `VERCEL_PROJECT_PRODUCTION_URL` y usa el dominio fijo; canonical `/` para que `*.vercel.app` no compita en buscadores; nuevos `robots.ts` (bloquea `/admin` y `/api/`) y `sitemap.ts`. La sesión del admin es por dominio: hay que volver a iniciar sesión en `ana-aguirre.com/admin`.

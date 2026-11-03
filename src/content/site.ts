@@ -3,10 +3,8 @@
 import type { SiteSettings } from "@/blocks/types";
 
 export const site = {
-  // En Vercel toma el dominio de producción del proyecto; cámbialo cuando haya dominio propio.
-  url: process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000",
+  // Dominio canónico (www y *.vercel.app apuntan aquí en metadata, canonical y sitemap).
+  url: process.env.VERCEL ? "https://ana-aguirre.com" : "http://localhost:3000",
   timezone: "America/Mexico_City",
 };
 
